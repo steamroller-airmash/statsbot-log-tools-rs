@@ -8,12 +8,14 @@ use std::fs::File;
 use std::env::args;
 use std::vec::Vec;
 use std::collections::HashMap;
+use std::cmp::Reverse;
 
 fn main() {
 	let args: Vec<String> = args().collect();
 
 	if args.len() < 3 {
 		println!("Usage: chatlog <logfile> <player>");
+		return;
 	}
 
 	let file = File::open(args[1].clone()).unwrap();
@@ -90,7 +92,7 @@ fn main() {
 
 	let mut result: Vec<(String, u32)> = names.into_iter().collect();
 
-	result.sort_by(|&(_, a), &(_, b)| a.cmp(&b));
+	result.sort_by(|&(_, a), &(_, b)| Reverse(a).cmp(&Reverse(b)));
 
 	for (name, cnt) in result.into_iter() {
 		println!("{}: {}", name, cnt);
