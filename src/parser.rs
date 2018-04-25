@@ -157,8 +157,24 @@ fn parse_record<'a, I>(it: &mut TokenIterator<'a, I>) -> Result<Record<'a>, Pars
 
 }
 
-pub fn parse<'a>(s: &'a str) -> Result<Record<'a>, ParseError> {
+pub fn parse_noreplace<'a>(s: &'a str) -> Result<Record<'a>, ParseError> {
 	let mut it = TokenIterator::new(lex(s).into_iter());
-
 	return parse_record(&mut it);
+}
+
+pub fn parse<'a>(s: &'a str) -> Result<Record<'a>, ParseError> {
+	let mut record = try!(parse_noreplace(s));
+
+	if record.tag == "PACKET" && record.entries.contains_key("c") {
+		let tag = match record.entries["c"] {
+			RecordValue::Str(name) => Some(name),
+			_ => None
+		};
+
+		if let Some(name) = tag {
+			record.tag = name;
+		}
+	}
+
+	return Ok(record);
 }
