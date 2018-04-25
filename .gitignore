@@ -2,3 +2,6 @@
 .vs/
 target/
 logs/
+
+log
+filtered
