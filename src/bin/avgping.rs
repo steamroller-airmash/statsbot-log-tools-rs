@@ -51,7 +51,7 @@ fn main() {
 		}
 	}
 
-	for (id, (ping, cnt)) in pings.iter() {
+	for (id, &(ping, cnt)) in pings.iter() {
 		println!("{}: {}", id, ping / cnt);
 	}
 }
