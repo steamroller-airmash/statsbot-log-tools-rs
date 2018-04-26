@@ -2,27 +2,27 @@ version: 2
 jobs:
   build:
     docker:
-      - image: abronan/rust-circleci:latest
+        - image: abronan/rust-circleci:latest
     steps:
-      - checkout
-      - restore_cache:
-          key: project-cache
-      - run:
-        command: |
-          rustup run nightly rustc --version --verbose
-          rustup run nightly cargo --version --verbose
-          rustup run nightly cargo build
-      - run:
-        command: |
-          rustup run stable rustc --version --verbose
-          rustup run stable cargo --version --verbose
-          rustup run stable cargo build
-      - run:
-        command: |
-          rustup run stable cargo test
-      - save_cache:
-          key: project-cache
-          paths:
-            - "~/.cargo"
-            - "./target"
+        - checkout
+        - restore_cache:
+            key: project-cache
+        - run:
+            command: |
+                rustup run nightly rustc --version --verbose
+                rustup run nightly cargo --version --verbose
+                rustup run nightly cargo build
+        - run:
+            command: |
+                rustup run stable rustc --version --verbose
+                rustup run stable cargo --version --verbose
+                rustup run stable cargo build
+        - run:
+            command: |
+                rustup run stable cargo test
+        - save_cache:
+            key: project-cache
+            paths:
+                - "~/.cargo"
+                - "./target"
             
