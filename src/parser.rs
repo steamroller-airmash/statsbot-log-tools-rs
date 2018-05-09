@@ -5,7 +5,7 @@ use std::mem;
 
 use lexer::*;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum RecordValue<'a> {
 	Str(&'a str),
 	Int(i64),
